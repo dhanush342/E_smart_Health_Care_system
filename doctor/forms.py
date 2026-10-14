@@ -32,9 +32,12 @@ class UserForm(UserCreationForm):
         fields=['username','email','password1','password2']
 
 class DoctorUserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}), required=False)
+
     class Meta:
-        model=User
-        fields=['first_name','last_name','username','password','email']
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'password', 'email']
         widgets = {
-        'password': forms.TextInput()
+            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
         }
+

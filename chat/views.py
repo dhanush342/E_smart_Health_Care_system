@@ -1,4 +1,5 @@
 import json
+from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -29,29 +30,32 @@ def index(request):
 def user_list(request, pk=None):
     """
     List all required users, or register a new user.
+    Requires authentication to view user directories.
     """
     if request.method == 'GET':
+        if not request.user.is_authenticated:
+            return JsonResponse({'error': 'Authentication required.'}, status=401)
         if pk:
             users = User.objects.filter(id=pk)
         else:
-            if request.user.is_authenticated:
-                if request.user.groups.filter(name="PATIENT").exists():
-                    users = User.objects.filter(groups__name="DOCTOR")
-                elif request.user.groups.filter(name="DOCTOR").exists():
-                    users = User.objects.filter(groups__name="PATIENT")
-                else:
-                    users = User.objects.exclude(id=request.user.id)
-
-                # Fallback to all other users if group filter returns none
-                if not users.exists():
-                    users = User.objects.exclude(id=request.user.id)
+            if request.user.groups.filter(name="PATIENT").exists():
+                users = User.objects.filter(groups__name="DOCTOR")
+            elif request.user.groups.filter(name="DOCTOR").exists():
+                users = User.objects.filter(groups__name="PATIENT")
             else:
-                users = User.objects.all()
+                users = User.objects.exclude(id=request.user.id)
+
+            # Fallback to all other users if group filter returns none
+            if not users.exists():
+                users = User.objects.exclude(id=request.user.id)
 
         serializer = UserSerializer(users, many=True, context={'request': request})
         return JsonResponse(serializer.data, safe=False)
 
     elif request.method == 'POST':
+        # Only staff or registration endpoints should create users
+        if not request.user.is_authenticated and not getattr(settings, 'ALLOW_ANONYMOUS_CHAT_REGISTER', False):
+            return JsonResponse({'error': 'Registration via API is restricted. Please use the registration portal.'}, status=403)
         try:
             if request.content_type and 'application/json' in request.content_type:
                 data = json.loads(request.body.decode('utf-8'))
@@ -61,7 +65,11 @@ def user_list(request, pk=None):
             data = request.POST.dict()
 
         try:
-            user = User.objects.create_user(username=data['username'], password=data['password'])
+            username = data.get('username', '').strip()
+            password = data.get('password', '')
+            if not username or not password:
+                return JsonResponse({'error': 'Username and password required.'}, status=400)
+            user = User.objects.create_user(username=username, password=password)
             UserProfile.objects.get_or_create(user=user)
             return JsonResponse({'username': user.username, 'id': user.id}, status=201)
         except Exception as e:
@@ -72,9 +80,17 @@ def user_list(request, pk=None):
 def message_list(request, sender=None, receiver=None):
     """
     List unread messages between sender and receiver, or create a new message.
+    Protected: Only participants in the conversation or staff can access messages.
     """
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Authentication required.'}, status=401)
+
     if request.method == 'GET':
         if sender and receiver:
+            # Enforce authorization: User must be sender or receiver
+            if request.user.id not in (int(sender), int(receiver)) and not request.user.is_staff:
+                return JsonResponse({'error': 'Forbidden: You cannot access other users messages.'}, status=403)
+
             messages = Message.objects.filter(sender_id=sender, receiver_id=receiver, is_read=False).order_by('timestamp')
             serializer = MessageSerializer(messages, many=True, context={'request': request})
             for message in messages:
@@ -97,13 +113,16 @@ def message_list(request, sender=None, receiver=None):
         except Exception:
             data = JSONParser().parse(request)
 
-        # Convert numeric IDs to usernames if IDs were provided
+        # Enforce that the sender is the currently authenticated user to prevent message spoofing
         if isinstance(data, dict):
-            if 'sender' in data and str(data['sender']).isdigit():
-                try:
-                    data['sender'] = User.objects.get(id=int(data['sender'])).username
-                except User.DoesNotExist:
-                    pass
+            # Sanitize message body to prevent stored XSS
+            if 'message' in data and isinstance(data['message'], str):
+                import html
+                data['message'] = html.escape(data['message'])
+
+            # Bind sender to request.user
+            data['sender'] = request.user.username
+
             if 'receiver' in data and str(data['receiver']).isdigit():
                 try:
                     data['receiver'] = User.objects.get(id=int(data['receiver'])).username

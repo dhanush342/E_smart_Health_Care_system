@@ -1,184 +1,269 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>E-Health Care</title>
-  <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com">
-  <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+  <title>E-Health Care - Clinical Teleconsultation & Diagnostics</title>
+  <meta name="description" content="Teleconsultation platform with doctor appointment booking, patient chat, and clinical machine learning diagnostics.">
 
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal">
+  <!-- Inter typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" type="text/css" href="{% static 'health/css/font-awesome.min.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'health/css/bootstrap.min.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'health/css/style.css' %}">
-  <!-- =======================================================
-    Theme Name: Medilab
-    Theme URL: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/
-    Author: BootstrapMade.com
-    Author URL: https://bootstrapmade.com
-  ======================================================= -->
 </head>
 
-<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-  <!--banner-->
-  <section id="banner" class="banner">
-    <div class="bg-color">
-      <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-          <div class="col-md-12">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				      </button>
-              <a class="navbar-brand" href="/" style="color: white;"> E- Health Care</a>
-            </div>
-            <div class="collapse navbar-collapse navbar-right" id="myNavbar">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="#banner">Home</a></li>
-                <li><a href="#contact">Contact</a></li>
-              </ul>
-            </div>
+<body>
+  <!-- Navigation -->
+  <nav class="site-nav">
+    <div class="nav-container">
+      <a class="site-brand" href="/">
+        <img src="{% static 'health/img/logo.png' %}" alt="E-Health Care Logo">
+        <span>E-Health Care</span>
+        <span class="brand-badge">Clinical Platform</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#portals">Portals</a></li>
+        <li><a href="#metrics">Platform Stats</a></li>
+        <li><a href="#previews">System Screenshots</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="/patient/patient_login" class="nav-cta">Patient Sign In</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section (Clean flat slate + teal accent, plain English copy) -->
+  <header class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <span class="hero-tag">
+          <i class="fa fa-shield" aria-hidden="true"></i> Clinical Care & Scheduling System
+        </span>
+        <h1 class="hero-title">Healthcare appointments, specialist consultations, and diagnostic screening.</h1>
+        <p class="hero-lead">
+          A hospital web system connecting patients with 106+ doctors across 20 clinical departments. Book consultations, export PDF receipts, message doctors directly, and review machine learning diagnostic indicators.
+        </p>
+        <div class="hero-actions">
+          <a href="/patient/patient_login" class="btn-flat-primary">Access Patient Portal</a>
+          <a href="/doctor/doctor_login" class="btn-flat-secondary">Doctor Login</a>
+          <a href="#portals" class="btn-flat-secondary">View All Portals</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Metrics Bar (Real Numbers from the Database) -->
+  <section class="metrics-bar" id="metrics">
+    <div class="metrics-container">
+      <div class="metric-card">
+        <div class="metric-number">106+</div>
+        <div class="metric-label">Verified Specialists</div>
+        <div class="metric-sub">Across 20 medical departments</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-number">369+</div>
+        <div class="metric-label">Appointment Slots</div>
+        <div class="metric-sub">Morning, afternoon, and evening shifts</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-number">5</div>
+        <div class="metric-label">AI Diagnostic Models</div>
+        <div class="metric-sub">CNN X-ray, Random Forest, Decision Tree</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-number">3-Stage</div>
+        <div class="metric-label">RL Queue Pipeline</div>
+        <div class="metric-sub">Triage (DQN), Scheduling, Live Queue (PPO)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Role Portals (Clean Flat Cards) -->
+  <section class="section" id="portals">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">System Portals</h2>
+        <p class="section-subtitle">Select your role to access your dedicated clinical console and tools.</p>
+      </div>
+
+      <div class="portal-grid">
+        <!-- Patient Portal -->
+        <div class="portal-card featured">
+          <span class="portal-badge">Patient Access</span>
+          <h3 class="portal-title">Patient Portal</h3>
+          <p class="portal-desc">
+            Search verified specialists by department or location, book open consultation slots, chat with doctors, and run self-check diagnostic models.
+          </p>
+          <ul class="portal-features">
+            <li>Search 106+ doctors by name, specialty, or clinic address</li>
+            <li>Book upcoming consultation slots with PDF confirmation</li>
+            <li>Real-time chat with attending medical doctors</li>
+            <li>Self-screen for Pneumonia (X-ray CNN), Heart Disease, & Diabetes</li>
+          </ul>
+          <div class="portal-actions">
+            <a href="/patient/patient_login" class="btn-portal-primary">Sign In</a>
+            <a href="/patient/patient_register" class="btn-portal-secondary">Register</a>
           </div>
         </div>
-      </nav>
-      <div class="container">
-        <div class="row">
-          <div class="banner-info">
-            <div class="banner-logo text-center">
-              <img src="{% static 'health/img/logo.png' %}" class="img-responsive" style="width: 120px; height:100px">
-            </div>
-            <div class="banner-text text-center">
-              <h1 class="white">E-Health Care at your desk!!</h1>
-              <p>We provide you best health care services.</p>
-              <a href="#contact" class="btn btn-appoint">Contact us.</a>
-            </div>
-            <div class="overlay-detail text-center">
-              <a href="#service"><i class="fa fa-angle-down"></i></a>
-            </div>
+
+        <!-- Doctor Portal -->
+        <div class="portal-card">
+          <span class="portal-badge">Medical Staff</span>
+          <h3 class="portal-title">Doctor Portal</h3>
+          <p class="portal-desc">
+            Manage daily consultation appointments, review patient appointment bookings, generate and email prescriptions, and chat with assigned patients.
+          </p>
+          <ul class="portal-features">
+            <li>Daily appointment agenda and slot management</li>
+            <li>Digital prescription generator with email delivery</li>
+            <li>Direct patient-doctor teleconsultation chat</li>
+            <li>Patient disease history and triage indicators</li>
+          </ul>
+          <div class="portal-actions">
+            <a href="/doctor/doctor_login" class="btn-portal-primary" style="width: 100%;">Doctor Sign In</a>
+          </div>
+        </div>
+
+        <!-- Admin Portal -->
+        <div class="portal-card">
+          <span class="portal-badge">System Oversight</span>
+          <h3 class="portal-title">Hospital Administrator</h3>
+          <p class="portal-desc">
+            Hospital operations oversight, doctor onboarding and roster management, patient record administration, and feedback auditing.
+          </p>
+          <ul class="portal-features">
+            <li>Doctor credentialing, roster updates, and department assignment</li>
+            <li>Patient record oversight and disease mapping</li>
+            <li>Hospital utilization and diagnostic prediction logs</li>
+            <li>Feedback monitoring and service auditing</li>
+          </ul>
+          <div class="portal-actions">
+            <a href="/roleadmin/roleadmin_login" class="btn-portal-primary" style="width: 100%;">Admin Sign In</a>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <!--/ banner-->
 
-  <!--cta-->
-  <section id="cta-1" class="section-padding">
-    <div class="container">
-      <div class="row">
-        <div class="schedule-tab">
-          <div class="col-md-4 col-sm-4 bor-left">
-            <div class="mt-boxy-color"></div>
-            <div class="medi-info">
-              <h3>Patient</h3>
-              <div class="banner-logo text-center">
-                <img src="{% static 'health/img/patient.png' %}" class="img-responsive" style="width: 300px; height:300px">
-              </div>
-              <p> </p>
+  <!-- Real System Screenshots & Technical Demos -->
+  <section class="section previews-section" id="previews">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">System Architecture & Screenshots</h2>
+        <p class="section-subtitle">Real components and operational views from the running codebase.</p>
+      </div>
 
-              <div class="banner-logo text-center">
-                <a href="/patient/patient_login" class="medi-info-btn">Login</a>
-                <a href="/patient/patient_register" class="medi-info-btn">Sign Up</a>
-              </div>
-            </div>
+      <div class="previews-grid">
+        <!-- Screenshot 1 -->
+        <div class="preview-card">
+          <div class="preview-image-wrap">
+            <img src="{% static 'health/img/screenshots/Ehealthcare.png' %}" alt="Specialist Directory Screenshot">
           </div>
-
-          <div class="col-md-4 col-sm-4">
-            <div class="medi-info">
-              <h3>Doctor</h3>
-              <div class="banner-logo text-center">
-                <img src="{% static 'health/img/doctor.jpg' %}" class="img-responsive" style="width: 300px; height:300px">
-              </div>
-              <p> </p>
-              <div class="banner-logo text-center">
-                <a href="/doctor/doctor_login" class="medi-info-btn">Login</a>
-              </div>
-            </div>
+          <div class="preview-body">
+            <h4 class="preview-title">Specialist Directory & Search</h4>
+            <p class="preview-desc">Filter 106+ doctors by department, qualifications, clinic location, or specific medical conditions.</p>
           </div>
+        </div>
 
-          <div class="col-md-4 col-sm-4">
-            <div class="medi-info">
-              <h3>Admin</h3>
-              <div class="banner-logo text-center">
-                <img src="{% static 'health/img/admin.png' %}" class="img-responsive" style="width: 300px; height:300px">
-              </div>
-              <p></p>
-              <div class="banner-logo text-center">
-                <a href="/roleadmin/roleadmin_login" class="medi-info-btn">Login</a>
-              </div>
-            </div>
+        <!-- Screenshot 2: Architecture Diagram -->
+        <div class="preview-card">
+          <div class="preview-image-wrap">
+            <img src="{% static 'health/img/screenshots/architecture_diagram.png' %}" alt="Reinforcement Learning Pipeline Architecture">
           </div>
+          <div class="preview-body">
+            <h4 class="preview-title">Multi-Stage RL Scheduling Pipeline</h4>
+            <p class="preview-desc">3-Stage optimization architecture: Triage Severity (DQN) &rarr; Doctor Slot Allocation (Double DQN) &rarr; Live Clinic Queue (PPO).</p>
+          </div>
+        </div>
 
+        <!-- Screenshot 3 -->
+        <div class="preview-card">
+          <div class="preview-image-wrap">
+            <img src="{% static 'health/img/screenshots/EhealthCare1.png' %}" alt="Diagnostic Checkup Tools Screenshot">
+          </div>
+          <div class="preview-body">
+            <h4 class="preview-title">Clinical Screening & Symptom Models</h4>
+            <p class="preview-desc">Self-check interfaces for cardiovascular risk assessment, type-2 diabetes estimation, and chest X-ray analysis.</p>
+          </div>
+        </div>
 
+        <!-- Screenshot 4 -->
+        <div class="preview-card">
+          <div class="preview-image-wrap">
+            <img src="{% static 'health/img/screenshots/EhealthCare2.png' %}" alt="Appointment Booking Interface Screenshot">
+          </div>
+          <div class="preview-body">
+            <h4 class="preview-title">Appointment Management & Receipts</h4>
+            <p class="preview-desc">Instant booking with slot conflict detection, appointment cancellation, and printable PDF prescription receipts.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
-  <!--cta-->
 
-  <!--contact-->
-  <section id="contact" class="section-padding">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h2 class="ser-title">Contact us</h2>
-          <hr class="botm-line">
-        </div>
-        <div class="col-md-5 col-sm-5">
-          <h3>Contact Info</h3>
-          <div class="space"></div>
-          <p><i class="fa fa-map-marker fa-fw pull-left fa-2x"></i>No. 1, Ramachandra Nagar, Porur<br>Chennai - 600116, Tamil Nadu, India</p>
-          <div class="space"></div>
-          <p><i class="fa fa-envelope-o fa-fw pull-left fa-2x"></i><a href="mailto:dhanushnaginane@gmail.com">dhanushnaginane@gmail.com</a></p>
-          <div class="space"></div>
-          <p><i class="fa fa-phone fa-fw pull-left fa-2x"></i><a href="tel:9490357006">+91 9490357006</a></p>
-          <div class="space"></div>
-          <p><i class="fa fa-linkedin fa-fw pull-left fa-2x"></i><a href="https://www.linkedin.com/in/dhanush-nagineni/" target="_blank" rel="noopener noreferrer">Dhanush Nagineni (LinkedIn)</a></p>
+  <!-- Contact & Hospital Location -->
+  <section class="section" id="contact">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">Hospital Location & Contact</h2>
+        <p class="section-subtitle">Reach out for inquiries, technical support, or scheduling assistance.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fa fa-map-marker"></i></div>
+            <div>
+              <div class="contact-label">Location Address</div>
+              <p class="contact-value">No. 1, Ramachandra Nagar, Porur<br>Chennai - 600116, Tamil Nadu, India</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fa fa-envelope"></i></div>
+            <div>
+              <div class="contact-label">Direct Email</div>
+              <p class="contact-value"><a href="mailto:dhanushnaginane@gmail.com">dhanushnaginane@gmail.com</a></p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fa fa-phone"></i></div>
+            <div>
+              <div class="contact-label">Phone Support</div>
+              <p class="contact-value"><a href="tel:+919490357006">+91 9490357006</a></p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fa fa-linkedin"></i></div>
+            <div>
+              <div class="contact-label">Project Maintainer</div>
+              <p class="contact-value"><a href="https://www.linkedin.com/in/dhanush-nagineni/" target="_blank" rel="noopener noreferrer">Dhanush Nagineni (LinkedIn)</a></p>
+            </div>
+          </div>
         </div>
 
-        <div class="col-md-7 col-sm-7 marb20">
-          <iframe src="https://maps.google.com/maps?q=No.+1,+Ramachandra+Nagar,+Porur,+Chennai+-+600116,+Tamil+Nadu,+India&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="380" style="border:0; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" allowfullscreen="" loading="lazy"></iframe>
+        <div class="map-container">
+          <iframe title="Hospital Map Location" src="https://maps.google.com/maps?q=No.+1,+Ramachandra+Nagar,+Porur,+Chennai+-+600116,+Tamil+Nadu,+India&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy"></iframe>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!--/ contact-->
-  <!--footer-->
-  <footer id="footer">
-    <div class="footer-line">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 text-center">
-            &copy;2026 Copyright E-Health Care. All Rights Reserved
-            <div class="credits">
-              <!--
-                All the links in the footer should remain intact.
-                You can delete the links only if you purchased the pro version.
-                Licensing information: https://bootstrapmade.com/license/
-                Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Medilab
-              -->
-              Developed by <a href="https://www.linkedin.com/in/dhanush-nagineni/" target="_blank" rel="noopener noreferrer">Dhanush Nagineni</a>
-            </div>
-          </div>
-        </div>
+  <!-- Footer (Clean, no template junk) -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p class="footer-meta">&copy; 2026 E-Health Care. Clinical Teleconsultation & Diagnostics Platform. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="/patient/patient_login">Patient Login</a>
+        <a href="/doctor/doctor_login">Doctor Login</a>
+        <a href="/roleadmin/roleadmin_login">Admin Login</a>
       </div>
     </div>
-
   </footer>
-  <!--/ footer-->
-
-  <script src="{% static 'health/js/jquery.min.js' %}"></script>
-  <script src="{% static 'health/js/jquery.easing.min.js' %}"></script>
-  <script src="{% static 'health/js/bootstrap.min.js' %}"></script>
-  <script src="{% static 'health/js/custom.js' %}"></script>
-
-
 </body>
-
 </html>

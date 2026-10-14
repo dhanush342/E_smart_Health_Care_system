@@ -254,7 +254,8 @@ def seed(total_doctors_to_add=105):
             }
         )
         if user_created:
-            user.set_password("doctor123")
+            default_password = os.environ.get('DEFAULT_SEED_DOCTOR_PASSWORD', 'doctor123')
+            user.set_password(default_password)
             user.save()
 
         # Add to DOCTOR group

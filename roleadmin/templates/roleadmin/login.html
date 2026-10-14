@@ -1,130 +1,189 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Login</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Admin Login - E-Health Care</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 
 	<style>
-		body,
-		html {
+		body, html {
 			margin: 0;
 			padding: 0;
-			height: 100%;
-			background: #7abecc !important;
+			min-height: 100%;
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+			background-color: #f8fafc;
+			color: #0f172a;
+		}
+		.auth-wrapper {
+			min-height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 24px;
 		}
 		.user_card {
-			width: 350px;
-			margin-top: auto;
-			margin-bottom: auto;
-			background: #74cfbf;
-			position: relative;
-			display: flex;
-			justify-content: center;
-			flex-direction: column;
-			padding: 10px;
-			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-			border-radius: 5px;
-
-		}
-
-		.form_container {
-			margin-top: 20px;
-		}
-
-		#form-title{
-			color: #fff;
-
-		}
-
-		.login_btn {
 			width: 100%;
-			background: #33ccff !important;
-			color: white !important;
+			max-width: 420px;
+			background: #ffffff;
+			border: 1px solid #e2e8f0;
+			border-radius: 8px;
+			padding: 36px 32px;
+			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 		}
-		.login_btn:focus {
-			box-shadow: none !important;
-			outline: 0px !important;
+		.brand-header {
+			text-align: center;
+			margin-bottom: 28px;
 		}
-		.login_container {
-			padding: 0 2rem;
+		.brand-header .role-tag {
+			display: inline-block;
+			background: #e2e8f0;
+			color: #334155;
+			font-size: 11px;
+			font-weight: 700;
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+			padding: 3px 10px;
+			border-radius: 4px;
+			margin-bottom: 10px;
+		}
+		.brand-header h2 {
+			font-size: 22px;
+			font-weight: 700;
+			color: #0f172a;
+			margin: 0 0 6px 0;
+		}
+		.brand-header p {
+			font-size: 14px;
+			color: #64748b;
+			margin: 0;
+		}
+		.form-group label {
+			font-size: 13px;
+			font-weight: 600;
+			color: #334155;
+			margin-bottom: 6px;
 		}
 		.input-group-text {
-			background: #f7ba5b !important;
-			color: white !important;
-			border: 0 !important;
-			border-radius: 0.25rem 0 0 0.25rem !important;
+			background: #f1f5f9;
+			color: #64748b;
+			border: 1px solid #cbd5e1;
+			border-right: none;
+			border-radius: 6px 0 0 6px;
 		}
-		.input_user,
-		.input_pass:focus {
-			box-shadow: none !important;
-			outline: 0px !important;
+		.form-control {
+			border: 1px solid #cbd5e1;
+			border-radius: 0 6px 6px 0;
+			font-size: 14px;
+			padding: 10px 14px;
+			height: auto;
 		}
-
-		#messages{
-			background-color: grey;
-			color: #fff;
-			padding: 10px;
-			margin-top: 10px;
+		.form-control:focus {
+			border-color: #0d9488;
+			box-shadow: 0 0 0 1px #0d9488;
+		}
+		.login_btn {
+			width: 100%;
+			background-color: #0d9488;
+			border: 1px solid #0d9488;
+			color: #ffffff;
+			font-size: 14px;
+			font-weight: 600;
+			padding: 11px 16px;
+			border-radius: 6px;
+			transition: background-color 0.15s ease;
+		}
+		.login_btn:hover {
+			background-color: #0f766e;
+			border-color: #0f766e;
+			color: #ffffff;
+		}
+		.rate-limit-notice {
+			font-size: 12px;
+			color: #64748b;
+			text-align: center;
+			margin-top: 14px;
+			background: #f8fafc;
+			border: 1px solid #e2e8f0;
+			padding: 6px 10px;
+			border-radius: 4px;
+		}
+		.auth-links {
+			font-size: 13px;
+			color: #475569;
+			text-align: center;
+			margin-top: 24px;
+			padding-top: 20px;
+			border-top: 1px solid #f1f5f9;
+		}
+		.auth-links a {
+			color: #0d9488;
+			font-weight: 600;
+			text-decoration: none;
+		}
+		.auth-links a:hover {
+			color: #0f766e;
 		}
 	</style>
-
 </head>
 <body>
-	<div class="container h-100">
-		<div class="d-flex justify-content-center h-100">
-			<div class="user_card">
-				{% for message in messages %}
-				<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	<div class="auth-wrapper">
+		<div class="user_card">
+			<div class="brand-header">
+				<span class="role-tag">System Administration</span>
+				<h2>Administrator Console</h2>
+				<p>Sign in with hospital management credentials</p>
+			</div>
+
+			{% for message in messages %}
+			<div class="alert alert-warning alert-dismissible fade show" role="alert">
 				{{message}}
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					  <span aria-hidden="true">&times;</span>
-					</button>
-				  </div>
-				  {% endfor %}
-				<div class="d-flex justify-content-center">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			{% endfor %}
 
-
-					<h3 id="form-title">ADMIN LOGIN</h3>
-
+			<form method="POST" action="">
+				{% csrf_token %}
+				<div class="form-group">
+					<label for="username">Admin Username or Email</label>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-user-shield"></i></span>
+						</div>
+						<input id="username" type="text" name="username" placeholder="Admin username or email" class="form-control" required autocomplete="username">
+					</div>
 				</div>
-				<div class="d-flex justify-content-center form_container">
-					<form method="POST" action="">
-						{% csrf_token %}
-						<div class="input-group mb-3">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-user"></i></span>
-							</div>
-							<input type="text" name="username" placeholder="Username..." class="form-control">
-						</div>
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-key"></i></span>
-							</div>
-								<input type="password" name="password" placeholder="Password..." class="form-control" >
-						</div>
 
-							<div class="d-flex justify-content-center mt-3 login_container">
-				 				<input class="btn login_btn" type="submit" value="Login">
-				   			</div>
-					</form>
-
+				<div class="form-group">
+					<label for="password">Password</label>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-lock"></i></span>
+						</div>
+						<input id="password" type="password" name="password" placeholder="Account password" class="form-control" required autocomplete="current-password">
+					</div>
 				</div>
 
 				<div class="mt-4">
-					<div class="d-flex justify-content-center links">
-						Go to landing page,<a href="/" class="ml-2" style="text-decoration: none;">Home</a>
-					</div>
-
+					<input class="btn login_btn" type="submit" value="Admin Sign In">
 				</div>
+
+				<div class="rate-limit-notice">
+					<i class="fas fa-shield-alt mr-1"></i> Security: Maximum 5 attempts per 15 minutes.
+				</div>
+			</form>
+
+			<div class="auth-links">
+				<div>Protected system area. Authorized personnel only.</div>
+				<div class="mt-2"><a href="/">&larr; Return to Homepage</a></div>
 			</div>
 		</div>
 	</div>
 </body>
-
 </html>

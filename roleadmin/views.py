@@ -130,8 +130,12 @@ def add_doctor(request):
         userForm=DoctorUserForm(request.POST)
         doctor_add_form=DoctorForm(request.POST,request.FILES)
         if userForm.is_valid() and doctor_add_form.is_valid():
-            user=userForm.save()
-            user.set_password(user.password)
+            user=userForm.save(commit=False)
+            raw_password = userForm.cleaned_data.get('password')
+            if raw_password and raw_password.strip():
+                user.set_password(raw_password)
+            else:
+                user.set_password(os.environ.get('DEFAULT_SEED_DOCTOR_PASSWORD', 'doctor123'))
             user.save()
             doctor=doctor_add_form.save(commit=False)
             doctor.user=user
@@ -161,8 +165,10 @@ def edit_doctor(request,pk):
         userForm=DoctorUserForm(request.POST,instance=user)
         doctor_add_form=DoctorForm(request.POST,request.FILES,instance=doctor)
         if userForm.is_valid() and doctor_add_form.is_valid():
-            user=userForm.save()
-            user.set_password(user.password)
+            user=userForm.save(commit=False)
+            new_password = userForm.cleaned_data.get('password')
+            if new_password and new_password.strip():
+                user.set_password(new_password)
             user.save()
             doctor_add_form.save()
             return redirect('doctors_list')
@@ -178,9 +184,11 @@ def delete_doctor(request,pk):
         doctor=DoctorInfo.objects.get(id=pk)
     except:
         return redirect('doctors_list')
-    user=User.objects.get(id=doctor.user_id)
-    user.delete()
-    doctor.delete()
+    try:
+        user = User.objects.get(id=doctor.user_id)
+        user.delete()
+    except User.DoesNotExist:
+        doctor.delete()
     return redirect('doctors_list')
 
 @login_required(login_url="roleadmin_login")
@@ -219,10 +227,13 @@ def patient_delete(request,pk):
     try:
         users=User.objects.filter(groups__name="PATIENT")
         patient=Profile.objects.filter(user_id__in=users).get(id=pk)
-    except:
+        if patient.user:
+            patient.user.delete()
+        else:
+            patient.delete()
+    except Exception:
         return redirect('patients_list')
 
-    patient.delete()
     return redirect('patients_list')
 
 @login_required(login_url='roleadmin_login')

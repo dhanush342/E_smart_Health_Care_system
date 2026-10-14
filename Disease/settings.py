@@ -1,20 +1,37 @@
 import os
+# Optional dotenv
 from .local_email import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+def _load_env_file(env_path):
+    if os.path.exists(env_path):
+        with open(env_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    k, v = line.split('=', 1)
+                    k, v = k.strip(), v.strip().strip('"').strip("'")
+                    if k not in os.environ:
+                        os.environ[k] = v
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(BASE_DIR, '.env'))
+except ImportError:
+    _load_env_file(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6=lw8ok^dacjf*$i-3mldpziz06s70i!p(m3$=!l^avkw7^d4i'
+SECRET_KEY = os.environ.get('SECRET_KEY', '6=lw8ok^dacjf*$i-3mldpziz06s70i!p(m3$=!l^avkw7^d4i-dev-fallback')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "testserver", "*"]
+ALLOWED_HOSTS = [host.strip() for host in os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost,testserver').split(',') if host.strip()]
 # AUTH_USER_MODEL = 'core.User'
 
 # Application definition
@@ -40,6 +57,8 @@ INSTALLED_APPS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
+    'Disease.middleware.SecuritySanitizationMiddleware',
+    'Disease.middleware.RateLimitMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -149,3 +168,22 @@ AUTHENTICATION_BACKENDS = [
     'Disease.backends.EmailOrUsernameModelBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+# Security Settings & Headers
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+SESSION_COOKIE_HTTPONLY = True
+
+# Rate Limiting Configuration (Auth: max 5 attempts per 15 minutes; Global: 120 req/min)
+AUTH_RATE_LIMIT = int(os.environ.get('AUTH_RATE_LIMIT', 5))
+AUTH_RATE_WINDOW_SECONDS = int(os.environ.get('AUTH_RATE_WINDOW_SECONDS', 900))
+GLOBAL_RATE_LIMIT = int(os.environ.get('GLOBAL_RATE_LIMIT', 120))
+GLOBAL_RATE_WINDOW_SECONDS = int(os.environ.get('GLOBAL_RATE_WINDOW_SECONDS', 60))
+
+# Payload & Upload Size Limits (1MB body, 10MB file upload)
+MAX_BODY_SIZE_BYTES = int(os.environ.get('MAX_BODY_SIZE_BYTES', 1048576))
+MAX_UPLOAD_SIZE_BYTES = int(os.environ.get('MAX_UPLOAD_SIZE_BYTES', 10485760))
+DATA_UPLOAD_MAX_MEMORY_SIZE = MAX_UPLOAD_SIZE_BYTES
+FILE_UPLOAD_MAX_MEMORY_SIZE = MAX_UPLOAD_SIZE_BYTES
+

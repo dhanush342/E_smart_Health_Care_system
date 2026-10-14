@@ -515,7 +515,10 @@ def feedback(request):
 @login_required(login_url='patient_login')
 @allowed_users(allowed_roles=['PATIENT'])
 def feedback_detail(request,pk):
-    feedback=Feedback.objects.get(id=pk,uploaded_by=request.user.profile)
+    try:
+        feedback = Feedback.objects.get(id=pk, uploaded_by=request.user.profile)
+    except Exception:
+        return redirect('feedback')
 
     context={
         "feedback":feedback
